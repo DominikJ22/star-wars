@@ -3,27 +3,18 @@ const app = express()
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const bodyParser= require('body-parser')
-const MongoClient = require('mongodb').MongoClient
 const PORT = 3000
 
 dotenv.config()
 
+app.set('views', './views')
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(bodyParser.json())
 
+
 let db;
-/*
-MongoClient.connect(process.env.MONGO_URL, (err, database) => {
-  if (err)
-    return console.log(err)
-  db = database
-  app.listen(3000, () => {
-    console.log('listening on 3000')
-  })
-})
-*/
 
 mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true })
  db = mongoose.connection
@@ -33,8 +24,6 @@ db.once('open', _ => {
   db.on('error', err => {
     console.error('connection error:', err)
   })
-
-
 
   const quotesCollection = db.collection('quotes')
 
