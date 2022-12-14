@@ -91,7 +91,7 @@ app.delete('/quotes', (req, res) => {
 
 //Connect to the database before listening
 connectDB().then(() => {
-  app.listen(PORT, () => {
+  app.listen(process.env.PORT || PORT, () => {
       console.log("listening for requests");
   })
 })
