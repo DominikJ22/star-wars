@@ -20,16 +20,29 @@ app.use(bodyParser.json())
 
 let db;
 
+db = mongoose.connection
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+
+const quotesCollection = db.collection('quotes')
+
+/*
 mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true })
  db = mongoose.connection
 db.once('open', _ => {
   console.log('Database connected')
 })
-  db.on('error', err => {
+db.on('error', err => {
     console.error('connection error:', err)
   })
-
-  const quotesCollection = db.collection('quotes')
+*/
 
 
 //middlewares
@@ -42,7 +55,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/quotes', (req, res) => {
-  //insertOne method
+  //quotesCollection.insertOne method
   quotesCollection.insertOne(req.body)
   .then (result => {
     console.log(result)
@@ -78,10 +91,8 @@ app.delete('/quotes', (req, res) => {
 
 
 //Connect to the database before listening
-
+connectDB().then(() => {
   app.listen(process.env.PORT || PORT, () => {
       console.log("listening for requests");
   })
-
-
-
+})
