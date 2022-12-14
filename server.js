@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/quotes', (req, res) => {
-  //quotesCollection.insertOne method
+//quotesCollection.insertOne method
   quotesCollection.insertOne(req.body)
   .then (result => {
     console.log(result)
