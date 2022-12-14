@@ -1,9 +1,10 @@
 const express = require('express')
-const app = express()
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const bodyParser= require('body-parser')
-const PORT = 3000
+
+const app = express()
+const PORT = process.env.PORT || 3000
 
 dotenv.config()
 
@@ -14,7 +15,18 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 
 
-let db;
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+
+/*let db;
 
 mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true })
  db = mongoose.connection
@@ -26,7 +38,7 @@ db.once('open', _ => {
   })
 
   const quotesCollection = db.collection('quotes')
-
+*/
 
 //middlewares
 app.get('/', (req, res) => {
@@ -72,7 +84,10 @@ app.delete('/quotes', (req, res) => {
   })
 })
 
-app.listen(process.env.PORT || PORT, ()=>{
-    console.log(`listening on ${PORT}`)
-})
+
+  app.listen(process.env.PORT || PORT, () => {
+      console.log("listening for requests");
+  })
+
+
 
