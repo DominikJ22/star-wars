@@ -9,18 +9,6 @@ const PORT = process.env.PORT || 3000
 dotenv.config()
 
 
-
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URL);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
-}
-
-
 app.set('views', './views')
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -30,7 +18,7 @@ app.use(bodyParser.json())
 
 
 
-/*let db;
+let db;
 
 mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true })
  db = mongoose.connection
@@ -42,7 +30,7 @@ db.once('open', _ => {
   })
 
   const quotesCollection = db.collection('quotes')
-*/
+
 
 //middlewares
 app.get('/', (req, res) => {
@@ -90,15 +78,10 @@ app.delete('/quotes', (req, res) => {
 
 
 //Connect to the database before listening
-connectDB().then(() => {
+
   app.listen(process.env.PORT || PORT, () => {
       console.log("listening for requests");
   })
-})
 
-  /*app.listen(process.env.PORT || PORT, () => {
-      console.log("listening for requests");
-  })
-*/
 
 
