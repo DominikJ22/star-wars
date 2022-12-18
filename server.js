@@ -5,8 +5,9 @@ const bodyParser= require('body-parser')
 
 dotenv.config({ path: "./config/.env" })
 
-const app = express()
 const PORT = process.env.PORT || 3000
+const app = express()
+
 
 app.set('views', './views')
 app.set('view engine', 'ejs')
