@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 
 
 let db;
-/*
+
 db = mongoose.connection
 const connectDB = async () => {
   try {
@@ -30,11 +30,10 @@ const connectDB = async () => {
     process.exit(1);
   }
 }
-*/
 
 
 
-
+/*
 mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true })
  db = mongoose.connection
 db.once('open', _ => {
@@ -43,7 +42,7 @@ db.once('open', _ => {
 db.on('error', err => {
     console.error('connection error:', err)
   })
-
+*/
 const quotesCollection = db.collection('quotes')
 
 
@@ -91,8 +90,9 @@ app.delete('/quotes', (req, res) => {
   })
 })
 
-
+connectDB().then(() => {
 //Connect to the database before listening
   app.listen(process.env.PORT || PORT, () => {
       console.log("listening for requests");
   })
+})
