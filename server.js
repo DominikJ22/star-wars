@@ -29,17 +29,6 @@ const connectDB = async () => {
 }
 
 
-
-/*
-mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true })
- db = mongoose.connection
-db.once('open', _ => {
-  console.log('Database connected')
-})
-db.on('error', err => {
-    console.error('connection error:', err)
-  })
-*/
 const quotesCollection = db.collection('quotes')
 
 
