@@ -3,19 +3,16 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const bodyParser= require('body-parser')
 
+dotenv.config({ path: "./config/.env" })
+
 const app = express()
 const PORT = process.env.PORT || 3000
-
-dotenv.config({ path: "./.env" })
-
 
 app.set('views', './views')
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(bodyParser.json())
-
-
 
 
 let db;
