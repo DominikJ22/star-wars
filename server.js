@@ -35,7 +35,7 @@ const connectDB = async () => {
 
 
 
-mongoose.connect(process.env.MONGO_URL.toString(), { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true })
  db = mongoose.connection
 db.once('open', _ => {
   console.log('Database connected')
@@ -93,6 +93,6 @@ app.delete('/quotes', (req, res) => {
 
 
 //Connect to the database before listening
-  app.listen(process.env.PORT.toString() || PORT, () => {
+  app.listen(process.env.PORT || PORT, () => {
       console.log("listening for requests");
   })
